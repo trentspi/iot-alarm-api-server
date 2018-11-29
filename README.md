@@ -2,14 +2,19 @@
 
 ## Widgets / Configuration
 
+| Property | Type | Description |
+|-|-|-|
+| format24 | bool | Use 24 hour time instead of 12 |
+
+
 ### Time
 
 A widget for showing the current time on the display.
 
 | Property | Type | Description |
 |-|-|-|
-| rgb | string | Changes color of rendered text |
-| format24 | bool | Use 24 hour time instead of 12 |
+| color | string | Changes color of rendered text |
+| position | int | position on matrix, if -1 -> disabled |
 
 ### Alarm Time
 
@@ -18,8 +23,7 @@ A widget for setting an alarm (can be repeatable) that shows a reminder on the d
 | Property | Type | Description |
 |-|-|-|
 | name | sting | Title/descriptor of the alarm |
-| rgb | string | Changes color of rendered text |
-| format24 | bool | Use 24 hour time instead of 12 |
+| color | string | Changes color of rendered text |
 | hour | int | Hour value of stored alarm (using 24 hour model) |
 | min | int | Minute value of stored alarm |
 | days | string | Comma seperated 1's or 0's per weekday, used for repeating alarms |
@@ -32,7 +36,7 @@ A widget that shows how much time until alarm goes off, eg -- Alarm 3 will go of
 
 | Property | Type | Description |
 |-|-|-|
-| rgb | string | Changes color of rendered text |
+| color | string | Changes color of rendered text |
 
 ### Date
 
@@ -40,7 +44,7 @@ A widget that shows the current date on the display
 
 | Property | Type | Description |
 |-|-|-|
-| rgb | string | Changes color of rendered text |
+| color | string | Changes color of rendered text |
 | showDay | bool | Show weekday in the date string, if > 32 -> scrolling text |
 
 ### Weather
@@ -49,7 +53,7 @@ A widget that shows the current weather based on entering a city (optional to im
 
 | Property | Type | Description |
 |-|-|-|
-| rgb | string | Changes color of rendered text |
+| color | string | Changes color of rendered text |
 | city | string | City used to display weather information (OWM API) |
 | cityID | string | City id used to display weather information (OWM API) |
 | coordinates | string | Coordinate vlaues used to display weather information (OWM API) |
@@ -60,7 +64,7 @@ A widget for displaying user-defined text on the display
 
 | Property | Type | Description |
 |-|-|-|
-| rgb | string | Changes color of rendered text |
+| color | string | Changes color of rendered text |
 | text | string | Text that will render on the display if > 32 -> scrolling text |
 
 ### Flash Display
@@ -69,15 +73,6 @@ A configuration (if enabled) that will flash the display when an alarm goes off.
 
 | Property | Type | Description |
 |-|-|-|
-| rgbValues | arr[] | Used to know flash color sequence (user defined) |
-
-### Network
-
-Configure system network to connect via WiFi.
-
-| Property | Type | Description |
-|-|-|-|
-| SSID | string | May also consider IP address instead |
-| password | string | network password |
+| colorValues | arr[] | Used to know flash color sequence (user defined) |
 
 
