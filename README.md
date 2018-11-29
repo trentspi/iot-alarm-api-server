@@ -27,6 +27,7 @@ A widget for setting an alarm (can be repeatable) that shows a reminder on the d
 | hour | int | Hour value of stored alarm (using 24 hour model) |
 | min | int | Minute value of stored alarm |
 | days | string | Comma seperated 1's or 0's per weekday, used for repeating alarms |
+| position | int | position on matrix, if -1 -> disabled |
 
 ### Alarm Countdown
 
@@ -37,6 +38,7 @@ A widget that shows how much time until alarm goes off, eg -- Alarm 3 will go of
 | Property | Type | Description |
 |-|-|-|
 | color | string | Changes color of rendered text |
+| position | int | position on matrix, if -1 -> disabled |
 
 ### Date
 
@@ -46,6 +48,7 @@ A widget that shows the current date on the display
 |-|-|-|
 | color | string | Changes color of rendered text |
 | showDay | bool | Show weekday in the date string, if > 32 -> scrolling text |
+| position | int | position on matrix, if -1 -> disabled |
 
 ### Weather
 
@@ -55,6 +58,8 @@ A widget that shows the current weather based on entering a city (optional to im
 |-|-|-|
 | color | string | Changes color of rendered text |
 | city | string | City used to display weather information (OWM API) |
+| position | int | position on matrix, if -1 -> disabled |
+| . | . | . |
 | cityID | string | City id used to display weather information (OWM API) |
 | coordinates | string | Coordinate vlaues used to display weather information (OWM API) |
 
@@ -66,6 +71,7 @@ A widget for displaying user-defined text on the display
 |-|-|-|
 | color | string | Changes color of rendered text |
 | text | string | Text that will render on the display if > 32 -> scrolling text |
+| position | int | position on matrix, if -1 -> disabled |
 
 ### Flash Display
 
