@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports = mongoose.model('countdown', {
+module.exports = mongoose.model('nextalarm', {
   context: String,
   color: {
     r: Number,
