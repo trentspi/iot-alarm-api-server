@@ -1,4 +1,4 @@
-# iotAlarmClock
+# iot-alarm-api-server
 
 ## Routes
 
