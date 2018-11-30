@@ -9,9 +9,9 @@
 | `/date` | GET, PATCH | Get / update settings record |
 | `/weather` | GET, PATCH | Get / update settings record |
 | `/text` | GET, PATCH | Get / update settings record |
-| `/alarm` | GET | Return list of all alarms |
-| `/aram/:id` | GET, PATCH | Return alarm data of id / update alarm |
-| `/alarm` | POST | Create an alarm, id is generated |
+| `/alarms` | GET | Return list of all alarms |
+| `/arams/:id` | GET, PATCH | Return alarm data of id / update alarm |
+| `/alarms` | POST | Create an alarm, id is generated |
 | `/modules` | GET | Return position value of all widgets |
 
 ## Master Collection
@@ -90,7 +90,6 @@
 }
 ```
 
-
 ## Widgets / Configuration
 
 ### Time
@@ -167,5 +166,3 @@ A configuration (if enabled) that will flash the display when an alarm goes off.
 | Property | Type | Description |
 |-|-|-|
 | colorValues | arr[] | Used to know flash color sequence (user defined) |
-
-
