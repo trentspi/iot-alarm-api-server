@@ -118,7 +118,7 @@ Data that is responsible for setting an alarm (allow for repeatable), optionally
 
 ### Next Alarm
 
-A widget that displays when your next alarm is, eg -- Alarm 3 is set to go off at 7:00 AM
+A widget that displays when your next alarm is, eg -- Alarm 3 is set to go off at 7:00 AM   
 Can be set to show a countdown of when your next alarm is, eg -- Alarm 3 will go off in 3 hours and 15 minutes.
 
 | Property | Type | Description |
