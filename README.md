@@ -56,7 +56,7 @@
       g: Number,
       b: Number
     },
-    countdown: Boolean,
+    displayAsCountdown: Boolean,
     position: Number
   },
   Date: {
