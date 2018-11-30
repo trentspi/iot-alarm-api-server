@@ -18,6 +18,27 @@
 
 ```
 {
+  Alarm: {
+    _id: String,
+    name: String,
+    color: {
+      r: Number,
+      g: Number,
+      b: Number
+    },
+    hour: Number,
+    min: Number,
+    days: {
+      monday: Boolean,
+      tuesday: Boolean,
+      wednesday: Boolean,
+      thursday: Boolean,
+      friday: Boolean,
+      saturday: Boolean,
+      sunday: Boolean
+    },
+    position: Number
+  },
   Time:
   {
     color: {
@@ -88,11 +109,11 @@ A widget for setting an alarm (can be repeatable) that shows a reminder on the d
 
 | Property | Type | Description |
 |-|-|-|
-| name | sting | Title/descriptor of the alarm |
+| name | string | Title/descriptor of the alarm |
 | color | Obj | Changes color of rendered text |
 | hour | int | Hour value of stored alarm (using 24 hour model) |
 | min | int | Minute value of stored alarm |
-| days | string | Comma seperated 1's or 0's per weekday, used for repeating alarms |
+| days | Obj | Object with days as keys, used for repeating alarms |
 | position | int | position on matrix between 1-4 , else disabled |
 
 ### Alarm Countdown
