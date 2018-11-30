@@ -1,5 +1,41 @@
 # iotAlarmClock
 
+## Master Collection
+
+```
+{
+  format24: Boolean,
+  Time:
+  {
+    color: String,
+    position: Number
+  },
+  Countdown:
+  {
+    color: String,
+    position: Number
+  },
+  Date: {
+    color: String,
+    position: Number,
+    showDay: Boolean
+  },
+  Weather:
+  {
+    color: String,
+    city: String,
+    position: Number
+  },
+  Text:
+  {
+    color: String,
+    text: String,
+    position: Number
+  }
+}
+```
+
+
 ## Widgets / Configuration
 
 | Property | Type | Description |
