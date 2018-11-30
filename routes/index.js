@@ -18,7 +18,8 @@ NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
         g: 255,
         b: 255
       },
-      position: -1
+      position: -1,
+      displayAsCountdown: false
     });
     doc.save(function(err) {
       if(err) return next(err);
@@ -273,6 +274,12 @@ router.patch('/nextalarm', function(req,res) {
       if (err) console.error(err);
     });
   }
+  if(req.body.displayAsCountdown) {
+    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{displayAsCountdown:req.body.displayAsCountdown}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
+  
   res.send({message: "Successfully updated NextAlarm settings!"});
 });  
 router.patch('/date', function(req,res) {

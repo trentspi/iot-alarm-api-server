@@ -7,5 +7,6 @@ module.exports = mongoose.model('nextalarm', {
     g: Number,
     b: Number
   },
+  displayAsCountdown: Boolean,
   position: Number
 });
