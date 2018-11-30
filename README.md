@@ -13,7 +13,7 @@
 | `/alarms/:id` | GET, PATCH | Return alarm data of id / update alarm |
 | `/alarms/:id` | DELETE | Delete an alarm by id |
 | `/alarms` | POST | Create an alarm, id is generated |
-| `/modules` | GET | Return position value of all widgets |
+| `/modules` | GET, PATCH | Get / update position value of all widgets |
 
 ## Master Collection
 
