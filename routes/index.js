@@ -1,18 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
-var Countdown = require('./Countdown/countdown.schema.js');
+var NextAlarm = require('./NextAlarm/nextalarm.schema.js');
 var _Date = require('./Date/date.schema.js');
 var _Text = require('./Text/text.schema.js');
 var Time = require('./Time/time.schema.js');
 var Weather = require('./Weather/weather.schema.js');
 var Alarm = require('./Alarm/alarm.schema.js');
 
-Countdown.findOne({context: 'countdown'}, function(err, obj) {
+NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
   if (err) return console.error(err);
   if (obj === null) {
-    let doc = new Countdown({
-      context: 'countdown',
+    let doc = new NextAlarm({
+      context: 'nextalarm',
       color: {
         r: 255,
         g: 255,
@@ -107,20 +107,46 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'IOT Alarm Clock' });
 });
 
-// router.get('/modules', function(req,res) {
+router.get('/modules', function(req,res) {
+  Time.find({'context': 'time'}).then(function(time, err) {
+    if (err) res.status(500).send(err);
+    
+    NextAlarm.find({'context': 'nextalarm'}).then(function(nextalarm, err) {
+      if(err) res.status(500).send(err);
 
-// });
+      _Date.find({'context': 'date'}).then(function(date, err) {
+        if(err) res.status(500).send(err);
+
+        Weather.find({'context': 'weather'}).then(function(weather, err) {
+          if(err) res.status(500).send(err);
+
+          _Text.find({'context': 'text'}).then(function(text, err) {
+            if(err) res.status(500).send(err);
+
+            res.json ({
+              time: time[0].position,
+              nextalarm: nextalarm[0].position,
+              date: date[0].position,
+              weather: weather[0].position,
+              text: text[0].position
+            });
+          });
+        });
+      });
+    });
+  });
+});
 
 router.get('/alarms/:id', function(req,res) {
   Alarm.findOne({_id: req.params.id}).then(function(alarm, err) {
-    if(err) res.error(err);
+    if(err) console.error(err);
     res.send(alarm);
   });
 });
 
 router.get('/alarms', function(req,res) {
   Alarm.find({}).then(function(alarms, err) {
-    if(err) res.error(err);
+    if(err) console.error(err);
     res.send(alarms);
   });
 });
@@ -169,8 +195,8 @@ router.post('/alarms', function(req,res) {
   res.json(alarm);
 });
 
-router.get('/countdown', function(req,res) {
-  Countdown.find({'context': 'countdown'}).then(function(obj, err) {
+router.get('/nextalarm', function(req,res) {
+  NextAlarm.find({'context': 'nextalarm'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
     res.json(obj);
   });
@@ -200,18 +226,18 @@ router.get('/weather', function(req,res) {
   });
 });
 
-router.patch('/countdown', function(req,res) {
+router.patch('/nextalarm', function(req,res) {
   if(req.body.color) {
-    Countdown.findOneAndUpdate({context: 'countdown'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
+    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
   if(req.body.position) {
-    Countdown.findOneAndUpdate({context: 'countdown'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
+    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  res.send({message: "Successfully updated Countdown settings!"});
+  res.send({message: "Successfully updated NextAlarm settings!"});
 });  
 router.patch('/date', function(req,res) {
   if(req.body.color) {
