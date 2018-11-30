@@ -10,7 +10,7 @@
 | `/weather` | GET, PATCH | Get / update settings record |
 | `/text` | GET, PATCH | Get / update settings record |
 | `/alarm` | GET | Return list of all alarms |
-| `/aram/:id` | GET | Return alarm data of id |
+| `/aram/:id` | GET, PATCH | Return alarm data of id / update alarm |
 | `/alarm` | POST | Create an alarm, id is generated |
 | `/modules` | GET | Return position value of all widgets |
 
