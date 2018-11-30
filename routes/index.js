@@ -195,6 +195,12 @@ router.post('/alarms', function(req,res) {
   res.json(alarm);
 });
 
+router.delete('/alarms/:id', function(req,res) {
+  Alarm.deleteOne({_id: req.params.id}, function(err) {
+    if(err) console.error(err);
+  });
+});
+
 router.get('/nextalarm', function(req,res) {
   NextAlarm.find({'context': 'nextalarm'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
