@@ -36,8 +36,7 @@
       friday: Boolean,
       saturday: Boolean,
       sunday: Boolean
-    },
-    position: Number
+    }
   },
   Time:
   {
@@ -49,13 +48,14 @@
     format24: Boolean,
     position: Number
   },
-  Countdown:
+  NextAlarm:
   {
     color: {
       r: Number,
       g: Number,
       b: Number
     },
+    countdown: Boolean,
     position: Number
   },
   Date: {
@@ -105,26 +105,26 @@ A widget for showing the current time on the display.
 
 ### Alarm Time
 
-A widget for setting an alarm (can be repeatable) that shows a reminder on the display.
+Data that is responsible for setting an alarm (allow for repeatable), optionally show a reminder on the display (Next Alarm).
 
 | Property | Type | Description |
 |-|-|-|
 | name | string | Title/descriptor of the alarm |
 | color | Obj | Changes color of rendered text |
+| enabled | bool | Alarm on/off |
 | hour | int | Hour value of stored alarm (using 24 hour model) |
 | min | int | Minute value of stored alarm |
 | days | Obj | Object with days as keys, used for repeating alarms |
-| position | int | position on matrix between 1-4 , else disabled |
 
-### Alarm Countdown
+### Next Alarm
 
-A widget that shows how much time until alarm goes off, eg -- Alarm 3 will go off in 3 hours and 15 minutes.
-
-(Consider allowing user to pick which alarm they want to show on the display)
+A widget that displays when your next alarm is, eg -- Alarm 3 is set to go off at 7:00 AM
+Can be set to show a countdown of when your next alarm is, eg -- Alarm 3 will go off in 3 hours and 15 minutes.
 
 | Property | Type | Description |
 |-|-|-|
 | color | Obj | Changes color of rendered text |
+| countdown | bool | Show time countdown of next alarm |
 | position | int | position on matrix between 1-4 , else disabled |
 
 ### Date
