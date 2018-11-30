@@ -12,7 +12,11 @@ Countdown.findOne({context: 'countdown'}, function(err, obj) {
   if (obj === null) {
     let doc = new Countdown({
       context: 'countdown',
-      color: '255,255,255',
+      color: {
+        r: 255,
+        g: 255,
+        b: 255
+      },
       position: -1
     });
     doc.save(function(err) {
@@ -26,7 +30,11 @@ _Date.findOne({context: 'date'}, function(err, obj) {
   if (obj === null) {
     let doc = new _Date({
       context: 'date',
-      color: '255,255,255',
+      color: {
+        r: 255,
+        g: 255,
+        b: 255
+      },
       showFullDate: false,
       position: -1
     });
@@ -41,7 +49,11 @@ _Text.findOne({context: 'text'}, function(err, obj) {
   if (obj === null) {
     let doc = new _Text({
       context: 'text',
-      color: '255,255,255',
+      color: {
+        r: 255,
+        g: 255,
+        b: 255
+      },
       text: 'Placeholder text',
       position: -1
     });
@@ -56,7 +68,11 @@ Time.findOne({context: 'time'}, function(err, obj) {
   if (obj === null) {
     let doc = new Time({
       context: 'time',
-      color: '255,255,255',
+      color: {
+        r: 255,
+        g: 255,
+        b: 255
+      },
       format24: false,
       position: -1
     });
@@ -71,7 +87,11 @@ Weather.findOne({context: 'weather'}, function(err, obj) {
   if (obj === null) {
     let doc = new Weather({
       context: 'weather',
-      color: '255,255,255',
+      color: {
+        r: 255,
+        g: 255,
+        b: 255
+      },
       city: 'Indianapolis',
       position: -1
     });
