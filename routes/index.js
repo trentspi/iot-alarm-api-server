@@ -6,6 +6,7 @@ var _Date = require('./Date/date.schema.js');
 var _Text = require('./Text/text.schema.js');
 var Time = require('./Time/time.schema.js');
 var Weather = require('./Weather/weather.schema.js');
+var Alarm = require('./Alarm/alarm.schema.js');
 
 Countdown.findOne({context: 'countdown'}, function(err, obj) {
   if (err) return console.error(err);
@@ -106,7 +107,34 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'IOT Alarm Clock' });
 });
 
+router.get('/alarm/:id', function(req,res) {
+  Alarm.findOne({_id: req.params.id}).then(function(alarm, err) {
+    if(err) res.error(err);
+    res.send(alarm);
+  });
+});
 
+router.get('/alarm', function(req,res) {
+  Alarm.find({}).then(function(alarms, err) {
+    if(err) res.error(err);
+    res.send(alarms);
+  });
+});
+
+router.post('/alarm', function(req,res) {
+  var alarm = new Alarm({
+    name: req.body.name,
+    color: req.body.color,
+    hour: req.body.hour,
+    min: req.body.min,
+    days: req.body.days,
+    position: req.body.position
+  });
+  alarm.save(function(err) {
+    if(err) return next(err);
+  });
+  res.json(alarm);
+});
 
 router.get('/countdown', function(req,res) {
   Countdown.find({'context': 'countdown'}).then(function(obj, err) {
@@ -138,9 +166,6 @@ router.get('/weather', function(req,res) {
     res.json(obj);
   });
 });
-
-
-
 
 router.patch('/countdown', function(req,res) {
   if(req.body.color) {
