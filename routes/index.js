@@ -198,6 +198,7 @@ router.post('/alarms', function(req,res) {
 router.delete('/alarms/:id', function(req,res) {
   Alarm.deleteOne({_id: req.params.id}, function(err) {
     if(err) console.error(err);
+    res.send({success: true, message: "Deleted Alarm ID: " + req.params.id});
   });
 });
 
