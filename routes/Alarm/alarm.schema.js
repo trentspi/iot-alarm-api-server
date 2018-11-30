@@ -1,6 +1,5 @@
 const shortid = require('shortid');
 var mongoose = require('mongoose');
-var Schema= mongoose.schema
 
 module.exports = mongoose.model('alarm', {
   _id: {
@@ -23,6 +22,5 @@ module.exports = mongoose.model('alarm', {
     friday: Boolean,
     saturday: Boolean,
     sunday: Boolean
-  },
-  position: Number
+  }
 });
