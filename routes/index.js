@@ -138,27 +138,27 @@ router.get('/modules', function(req,res) {
 });
 
 router.patch('/modules', function(req,res) {
-  if(req.body.date) {
+  if(req.body.date !== null) {
     _Date.findOneAndUpdate({context: 'date'}, {$set:{position:req.body.date}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.time) {
+  if(req.body.time !== null) {
     Time.findOneAndUpdate({context: 'time'}, {$set:{position:req.body.time}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.nextalarm) {
+  if(req.body.nextalarm !== null) {
     NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{position:req.body.nextalarm}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.weather) {
+  if(req.body.weather !== null) {
     Weather.findOneAndUpdate({context: 'weather'}, {$set:{position:req.body.weather}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.text) {
+  if(req.body.text !== null) {
     _Text.findOneAndUpdate({context: 'text'}, {$set:{position:req.body.text}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
