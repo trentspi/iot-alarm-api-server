@@ -11,6 +11,7 @@
 | `/text` | GET, PATCH | Get / update settings record |
 | `/alarms` | GET | Return list of all alarms |
 | `/alarms/:id` | GET, PATCH | Return alarm data of id / update alarm |
+| `/alarms/:id` | DELETE | Delete an alarm by id |
 | `/alarms` | POST | Create an alarm, id is generated |
 | `/modules` | GET | Return position value of all widgets |
 
