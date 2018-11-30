@@ -5,7 +5,7 @@
 | Path | Allowed HTTP method | Description |
 |-|-|-|
 | `/time` | GET, PATCH | Get / update settings record |
-| `/countdown` | GET, PATCH | Get / update settings record |
+| `/nextalarm` | GET, PATCH | Get / update settings record |
 | `/date` | GET, PATCH | Get / update settings record |
 | `/weather` | GET, PATCH | Get / update settings record |
 | `/text` | GET, PATCH | Get / update settings record |
