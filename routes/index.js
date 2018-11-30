@@ -107,28 +107,61 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'IOT Alarm Clock' });
 });
 
-router.get('/alarm/:id', function(req,res) {
+// router.get('/modules', function(req,res) {
+
+// });
+
+router.get('/alarms/:id', function(req,res) {
   Alarm.findOne({_id: req.params.id}).then(function(alarm, err) {
     if(err) res.error(err);
     res.send(alarm);
   });
 });
 
-router.get('/alarm', function(req,res) {
+router.get('/alarms', function(req,res) {
   Alarm.find({}).then(function(alarms, err) {
     if(err) res.error(err);
     res.send(alarms);
   });
 });
 
-router.post('/alarm', function(req,res) {
+router.patch('/alarms/:id', function(req,res) {
+  if(req.body.name) {
+    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{name:req.body.name}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
+  if(req.body.color) {
+    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
+  if(req.body.hour) {
+    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{hour:req.body.hour}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
+  if(req.body.min) {
+    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{min:req.body.min}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
+  if(req.body.days) {
+    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{days:req.body.days}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
+  res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
+
+});
+
+router.post('/alarms', function(req,res) {
   var alarm = new Alarm({
     name: req.body.name,
     color: req.body.color,
     hour: req.body.hour,
     min: req.body.min,
     days: req.body.days,
-    position: req.body.position
   });
   alarm.save(function(err) {
     if(err) return next(err);
