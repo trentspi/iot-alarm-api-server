@@ -109,21 +109,21 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/countdown', function(req,res) {
-  Countdown.find({'context': 'countdown'}).then(function(time, err) {
+  Countdown.find({'context': 'countdown'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
-    res.json(time);
+    res.json(obj);
   });
 });
 router.get('/date', function(req,res) {
-  _Date.find({'context': 'date'}).then(function(time, err) {
+  _Date.find({'context': 'date'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
-    res.json(time);
+    res.json(obj);
   });
 });
 router.get('/text', function(req,res) {
-  _Text.find({'context': 'text'}).then(function(time, err) {
+  _Text.find({'context': 'text'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
-    res.json(time);
+    res.json(obj);
   });
 });
 router.get('/time', function(req, res) {
@@ -133,9 +133,9 @@ router.get('/time', function(req, res) {
   });
 });
 router.get('/weather', function(req,res) {
-  Weather.find({'context': 'weather'}).then(function(time, err) {
+  Weather.find({'context': 'weather'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
-    res.json(time);
+    res.json(obj);
   });
 });
 
