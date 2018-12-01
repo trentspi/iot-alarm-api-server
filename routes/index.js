@@ -301,7 +301,7 @@ router.patch('/date', function(req,res) {
   res.send({message: "Successfully updated Date settings!"});
 });  
 router.patch('/text', function(req,res) {
-  if(req.body.color !== nullf) {
+  if(req.body.color !== null) {
     _Text.findOneAndUpdate({context: 'text'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
