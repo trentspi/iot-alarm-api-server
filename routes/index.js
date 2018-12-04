@@ -207,6 +207,11 @@ router.patch('/alarms/:id', function(req,res) {
       if (err) console.error(err);
     });
   }
+  if(req.body.enabled !== null) {
+    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{enabled:req.body.enabled}}, {new: true}, (err, doc) => {
+      if (err) console.error(err);
+    });
+  }
   res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
 
 });
@@ -218,6 +223,7 @@ router.post('/alarms', function(req,res) {
     hour: req.body.hour,
     min: req.body.min,
     days: req.body.days,
+    enabled: req.body.enabled
   });
   alarm.save(function(err) {
     if(err) return next(err);

@@ -22,5 +22,6 @@ module.exports = mongoose.model('alarm', {
     friday: Boolean,
     saturday: Boolean,
     sunday: Boolean
-  }
+  },
+  enabled: Boolean
 });
