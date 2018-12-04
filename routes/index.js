@@ -182,36 +182,9 @@ router.get('/alarms', function(req,res) {
 });
 
 router.patch('/alarms/:id', function(req,res) {
-  if(req.body.name !== null) {
-    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{name:req.body.name}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.color !== null) {
-    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.hour !== null) {
-    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{hour:req.body.hour}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.min !== null) {
-    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{min:req.body.min}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.days !== null) {
-    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{days:req.body.days}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.enabled !== null) {
-    Alarm.findOneAndUpdate({_id: req.params.id}, {$set:{enabled:req.body.enabled}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
+  Alarm.findOneAndUpdate({id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
+    if (err) console.error(err);
+  });
   res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
 
 });
@@ -270,96 +243,37 @@ router.get('/weather', function(req,res) {
 });
 
 router.patch('/nextalarm', function(req,res) {
-  if(req.body.color !== null) {
-    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.position !== null) {
-    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.displayAsCountdown !== null) {
-    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{displayAsCountdown:req.body.displayAsCountdown}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  } 
+  NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:req.body}, {new: true}, (err, doc) => {
+    if (err) console.error(err);
+  });
   
   res.send({message: "Successfully updated NextAlarm settings!"});
 });  
 router.patch('/date', function(req,res) {
-  if(req.body.color !== null) {
-    _Date.findOneAndUpdate({context: 'date'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.position !== null) {
-    _Date.findOneAndUpdate({context: 'date'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.showFullDate !== null) {
-    _Date.findOneAndUpdate({context: 'date'}, {$set:{showFullDate:req.body.showFullDate}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
+  _Date.findOneAndUpdate({context: 'date'}, {$set:req.body}, {new: true}, (err, doc) => {
+    if (err) console.error(err);
+  });
+
   res.send({message: "Successfully updated Date settings!"});
 });  
 router.patch('/text', function(req,res) {
-  if(req.body.color !== null) {
-    _Text.findOneAndUpdate({context: 'text'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.text !== null) {
-    _Text.findOneAndUpdate({context: 'text'}, {$set:{text:req.body.text}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.position !== null) {
-    _Text.findOneAndUpdate({context: 'text'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
+  Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
+    if (err) console.error(err);
+  });
   res.send({message: "Successfully updated Text settings!"});
 });  
 router.patch('/time', function(req,res) {
 
-  if(req.body.color !== null) {
-    Time.findOneAndUpdate({context: 'time'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.format24 !== null) {
-    Time.findOneAndUpdate({context: 'time'}, {$set:{format24:req.body.format24}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.position !== null) {
-    Time.findOneAndUpdate({context: 'time'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
+  Time.findOneAndUpdate({context: 'time'}, {$set:req.body}, {new: true}, (err, doc) => {
+    if (err) console.error(err);
+  });
   res.send({message: "Successfully updated Time settings!"});
   
 });
 router.patch('/weather', function(req,res) {
-  if(req.body.color !== null) {
-    Weather.findOneAndUpdate({context: 'weather'}, {$set:{color:req.body.color}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.city !== null) {
-    Weather.findOneAndUpdate({context: 'weather'}, {$set:{city:req.body.city}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
-  if(req.body.position !== null) {
-    Weather.findOneAndUpdate({context: 'weather'}, {$set:{position:req.body.position}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
-  }
+  Weather.findOneAndUpdate({context: 'weather'}, {$set:req.body}, {new: true}, (err, doc) => {
+    if (err) console.error(err);
+  });
   res.send({message: "Successfully updated Weather settings!"});
 });  
 
