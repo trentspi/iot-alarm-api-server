@@ -182,7 +182,7 @@ router.get('/alarms', function(req,res) {
 });
 
 router.patch('/alarms/:id', function(req,res) {
-  Alarm.findOneAndUpdate({id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
+  Alarm.findOneAndUpdate({_id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
     if (err) console.error(err);
   });
   res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
