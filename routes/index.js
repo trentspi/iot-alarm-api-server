@@ -257,7 +257,7 @@ router.patch('/date', function(req,res) {
   res.send({message: "Successfully updated Date settings!"});
 });  
 router.patch('/text', function(req,res) {
-  Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
+  _Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
     if (err) console.error(err);
   });
   res.send({message: "Successfully updated Text settings!"});
