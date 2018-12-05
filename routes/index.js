@@ -198,10 +198,11 @@ router.post('/alarms', function(req,res) {
     days: req.body.days,
     enabled: req.body.enabled
   });
-  alarm.save(function(err) {
-    if(err) return next(err);
+  alarm.save(function(err, alarm) {
+    if(err) res.status(500).send(err);
+    res.json(alarm);
   });
-  res.json(alarm);
+  
 });
 
 router.delete('/alarms/:id', function(req,res) {
@@ -257,7 +258,7 @@ router.patch('/date', function(req,res) {
   res.send({message: "Successfully updated Date settings!"});
 });  
 router.patch('/text', function(req,res) {
-  _Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
+  Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
     if (err) console.error(err);
   });
   res.send({message: "Successfully updated Text settings!"});
