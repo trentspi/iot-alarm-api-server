@@ -139,29 +139,29 @@ router.get('/modules', function(req,res) {
 });
 
 router.patch('/modules', function(req,res) {
-  if(req.body.date !== null) {
+  if(req.body.date || req.body.date == 0) {
     _Date.findOneAndUpdate({context: 'date'}, {$set:{position:req.body.date}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.time !== null) {
+  if(req.body.time || req.body.time === 0) {
     Time.findOneAndUpdate({context: 'time'}, {$set:{position:req.body.time}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.nextalarm !== null) {
+  if(req.body.nextalarm || req.body.nextalarm === 0) {
     NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{position:req.body.nextalarm}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.weather !== null) {
+  if(req.body.weather || req.body.weather === 0) {
     Weather.findOneAndUpdate({context: 'weather'}, {$set:{position:req.body.weather}}, {new: true}, (err, doc) => {
       if (err) console.error(err);
     });
   }
-  if(req.body.text !== null) {
+  if(req.body.text || req.body.text === 0) {
     _Text.findOneAndUpdate({context: 'text'}, {$set:{position:req.body.text}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
+      if (err) console.errors(err);
     });
   }
   res.send({success: true, message: "Successfully updated positions"});
