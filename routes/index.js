@@ -190,19 +190,19 @@ router.patch('/alarms/:id', function(req,res) {
 });
 
 router.post('/alarms', function(req,res) {
-  var alarm = new Alarm({
+  Alarm.create({
     name: req.body.name,
     color: req.body.color,
     hour: req.body.hour,
     min: req.body.min,
     days: req.body.days,
     enabled: req.body.enabled
-  });
-  alarm.save(function(err, alarm) {
-    if(err) res.status(500).send(err);
+  }).then(function (alarm, err) {
+    if (err) {
+      res.status(500).send(err);
+    }
     res.json(alarm);
   });
-  
 });
 
 router.delete('/alarms/:id', function(req,res) {
