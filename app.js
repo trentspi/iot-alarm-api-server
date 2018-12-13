@@ -27,6 +27,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.disable('etag'); 
 
 app.use('/', indexRouter);
 
