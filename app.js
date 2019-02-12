@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -15,7 +17,13 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-mongoose.connect("mongodb://localhost:27017/iotAlarmClock", { useNewUrlParser: true });
+console.log(process.env.DB_HOST);
+console.log(process.env.DB_NAME);
+
+mongoose.connect(process.env.DB_HOST, {
+  useNewUrlParser: true,
+  dbName: process.env.DB_NAME
+});
 mongoose.Promise = global.Promise;
 
 var db = mongoose.connection;
