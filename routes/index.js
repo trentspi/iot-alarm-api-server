@@ -8,6 +8,7 @@ var Time = require('./Time/time.schema.js');
 var Weather = require('./Weather/weather.schema.js');
 var Alarm = require('./Alarm/alarm.schema.js');
 
+
 NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
   if (err) return console.error(err);
   if (obj === null) {
@@ -182,7 +183,7 @@ router.get('/alarms', function(req,res) {
 });
 
 router.patch('/alarms/:id', function(req,res) {
-  Alarm.findOneAndUpdate({id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
+  Alarm.findOneAndUpdate({_id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
     if (err) console.error(err);
   });
   res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
@@ -258,7 +259,7 @@ router.patch('/date', function(req,res) {
   res.send({message: "Successfully updated Date settings!"});
 });  
 router.patch('/text', function(req,res) {
-  Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
+  _Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
     if (err) console.error(err);
   });
   res.send({message: "Successfully updated Text settings!"});
