@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-module.exports = mongoose.model('text', {
+module.exports = mongoose.model("text", {
   context: String,
   color: {
     r: Number,

@@ -1,10 +1,10 @@
-const shortid = require('shortid');
-var mongoose = require('mongoose');
+const shortid = require("shortid");
+const mongoose = require("mongoose");
 
-module.exports = mongoose.model('alarm', {
+module.exports = mongoose.model("alarm", {
   _id: {
-    'type': String,
-    'default': shortid.generate
+    type: String,
+    default: shortid.generate
   },
   name: String,
   color: {

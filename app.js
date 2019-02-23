@@ -1,36 +1,43 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var cors = require('cors');
-var bodyparser = require('body-parser');
+require("dotenv").config();
 
-var indexRouter = require('./routes/index');
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const bodyparser = require("body-parser");
 
-var app = express();
+const indexRouter = require("./routes/index");
+
+const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "hbs");
 
-mongoose.connect("mongodb://localhost:27017/iotAlarmClock", { useNewUrlParser: true });
+console.log(`connected to ${process.env.DB_HOST}`);
+console.log(`connected to ${process.env.DB_NAME}`);
+
+mongoose.connect(process.env.DB_HOST, {
+  useNewUrlParser: true,
+  dbName: process.env.DB_NAME
+});
 mongoose.Promise = global.Promise;
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.use(cors());
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.disable('etag'); 
+app.use(express.static(path.join(__dirname, "public")));
+app.disable("etag");
 
-app.use('/', indexRouter);
-
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -41,11 +48,11 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;
