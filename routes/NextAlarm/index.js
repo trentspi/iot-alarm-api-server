@@ -3,7 +3,7 @@ const router = express.Router();
 
 const NextAlarm = require("./nextalarm.schema");
 
-function seed() {
+function seedIfNeeded() {
   NextAlarm.findOne({ context: "nextalarm" }, (err, obj) => {
     if (err) return console.error(err);
     if (obj === null) {
@@ -44,4 +44,4 @@ router.patch("/", (req, res) => {
 });
 
 module.exports = router;
-module.exports.seed = seed;
+module.exports.seedIfNeeded = seedIfNeeded;

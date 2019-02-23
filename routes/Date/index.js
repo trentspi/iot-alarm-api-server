@@ -3,7 +3,7 @@ const router = express.Router();
 
 const _Date = require("./date.schema");
 
-function seed() {
+function seedIfNeeded() {
   _Date.findOne({ context: "date" }, function(err, obj) {
     if (err) return console.error(err);
     if (obj === null) {
@@ -44,4 +44,4 @@ router.patch("/", function(req, res) {
 });
 
 module.exports = router;
-module.exports.seed = seed;
+module.exports.seedIfNeeded = seedIfNeeded;
