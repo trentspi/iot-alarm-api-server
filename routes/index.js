@@ -1,17 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-var AlarmsModule = require('./alarms');
-var NextAlarmModule = require('./nextalarm');
-var DateModule = require('./date');
+const AlarmsModule = require("./alarms");
+const NextAlarmModule = require("./nextalarm");
+const DateModule = require("./date");
 
-
-var NextAlarmSchema = require('./nextalarm/nextalarm.schema.js');
-var _Date = require('./date/date.schema.js');
-var _Text = require('./text/text.schema.js');
-var Time = require('./time/time.schema.js');
-var Weather = require('./weather/weather.schema.js');
-
+const NextAlarmSchema = require("./nextalarm/nextalarm.schema.js");
+const _Date = require("./date/date.schema.js");
+const _Text = require("./text/text.schema.js");
+const Time = require("./time/time.schema.js");
+const Weather = require("./weather/weather.schema.js");
 
 // NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
 //   if (err) return console.error(err);
@@ -31,12 +29,12 @@ var Weather = require('./weather/weather.schema.js');
 //     });
 //   }
 // });
-NextAlarmModule.seed()
+NextAlarmModule.seed();
 DateModule.seed();
 
-router.use('/alarms', AlarmsModule);
-router.use('/nextalarm', NextAlarmModule);
-router.use('/date', DateModule);
+router.use("/alarms", AlarmsModule);
+router.use("/nextalarm", NextAlarmModule);
+router.use("/date", DateModule);
 
 // _Date.findOne({context: 'date'}, function(err, obj) {
 //   if (err) return console.error(err);
@@ -57,30 +55,30 @@ router.use('/date', DateModule);
 //   }
 // });
 
-_Text.findOne({context: 'text'}, function(err, obj) {
+_Text.findOne({ context: "text" }, function(err, obj) {
   if (err) return console.error(err);
   if (obj === null) {
     let doc = new _Text({
-      context: 'text',
+      context: "text",
       color: {
         r: 255,
         g: 255,
         b: 255
       },
-      text: 'Placeholder text',
+      text: "Placeholder text",
       position: -1
     });
     doc.save(function(err) {
-      if(err) return next(err);
+      if (err) return next(err);
     });
   }
 });
 
-Time.findOne({context: 'time'}, function(err, obj) {
+Time.findOne({ context: "time" }, function(err, obj) {
   if (err) return console.error(err);
   if (obj === null) {
     let doc = new Time({
-      context: 'time',
+      context: "time",
       color: {
         r: 255,
         g: 255,
@@ -90,52 +88,55 @@ Time.findOne({context: 'time'}, function(err, obj) {
       position: -1
     });
     doc.save(function(err) {
-      if(err) return next(err);
+      if (err) return next(err);
     });
   }
 });
 
-Weather.findOne({context: 'weather'}, function(err, obj) {
+Weather.findOne({ context: "weather" }, function(err, obj) {
   if (err) return console.error(err);
   if (obj === null) {
     let doc = new Weather({
-      context: 'weather',
+      context: "weather",
       color: {
         r: 255,
         g: 255,
         b: 255
       },
-      city: 'Indianapolis',
+      city: "Indianapolis",
       position: -1
     });
     doc.save(function(err) {
-      if(err) return next(err);
+      if (err) return next(err);
     });
   }
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'IOT Alarm Clock' });
+router.get("/", function(req, res, next) {
+  res.render("index", { title: "IOT Alarm Clock" });
 });
 
-router.get('/modules', function(req,res) {
-  Time.find({'context': 'time'}).then(function(time, err) {
+router.get("/modules", function(req, res) {
+  Time.find({ context: "time" }).then(function(time, err) {
     if (err) res.status(500).send(err);
-    
-    NextAlarmSchema.find({'context': 'nextalarm'}).then(function(nextalarm, err) {
-      if(err) res.status(500).send(err);
 
-      _Date.find({'context': 'date'}).then(function(date, err) {
-        if(err) res.status(500).send(err);
+    NextAlarmSchema.find({ context: "nextalarm" }).then(function(
+      nextalarm,
+      err
+    ) {
+      if (err) res.status(500).send(err);
 
-        Weather.find({'context': 'weather'}).then(function(weather, err) {
-          if(err) res.status(500).send(err);
+      _Date.find({ context: "date" }).then(function(date, err) {
+        if (err) res.status(500).send(err);
 
-          _Text.find({'context': 'text'}).then(function(text, err) {
-            if(err) res.status(500).send(err);
+        Weather.find({ context: "weather" }).then(function(weather, err) {
+          if (err) res.status(500).send(err);
 
-            res.json ({
+          _Text.find({ context: "text" }).then(function(text, err) {
+            if (err) res.status(500).send(err);
+
+            res.json({
               time: time[0].position,
               nextalarm: nextalarm[0].position,
               date: date[0].position,
@@ -149,33 +150,58 @@ router.get('/modules', function(req,res) {
   });
 });
 
-router.patch('/modules', function(req,res) {
-  if(req.body.date || req.body.date == 0) {
-    _Date.findOneAndUpdate({context: 'date'}, {$set:{position:req.body.date}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
+router.patch("/modules", function(req, res) {
+  if (req.body.date || req.body.date == 0) {
+    _Date.findOneAndUpdate(
+      { context: "date" },
+      { $set: { position: req.body.date } },
+      { new: true },
+      (err, doc) => {
+        if (err) console.error(err);
+      }
+    );
   }
-  if(req.body.time || req.body.time === 0) {
-    Time.findOneAndUpdate({context: 'time'}, {$set:{position:req.body.time}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
+  if (req.body.time || req.body.time === 0) {
+    Time.findOneAndUpdate(
+      { context: "time" },
+      { $set: { position: req.body.time } },
+      { new: true },
+      (err, doc) => {
+        if (err) console.error(err);
+      }
+    );
   }
-  if(req.body.nextalarm || req.body.nextalarm === 0) {
-    NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:{position:req.body.nextalarm}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
+  if (req.body.nextalarm || req.body.nextalarm === 0) {
+    NextAlarm.findOneAndUpdate(
+      { context: "nextalarm" },
+      { $set: { position: req.body.nextalarm } },
+      { new: true },
+      (err, doc) => {
+        if (err) console.error(err);
+      }
+    );
   }
-  if(req.body.weather || req.body.weather === 0) {
-    Weather.findOneAndUpdate({context: 'weather'}, {$set:{position:req.body.weather}}, {new: true}, (err, doc) => {
-      if (err) console.error(err);
-    });
+  if (req.body.weather || req.body.weather === 0) {
+    Weather.findOneAndUpdate(
+      { context: "weather" },
+      { $set: { position: req.body.weather } },
+      { new: true },
+      (err, doc) => {
+        if (err) console.error(err);
+      }
+    );
   }
-  if(req.body.text || req.body.text === 0) {
-    _Text.findOneAndUpdate({context: 'text'}, {$set:{position:req.body.text}}, {new: true}, (err, doc) => {
-      if (err) console.errors(err);
-    });
+  if (req.body.text || req.body.text === 0) {
+    _Text.findOneAndUpdate(
+      { context: "text" },
+      { $set: { position: req.body.text } },
+      { new: true },
+      (err, doc) => {
+        if (err) console.errors(err);
+      }
+    );
   }
-  res.send({success: true, message: "Successfully updated positions"});
+  res.send({ success: true, message: "Successfully updated positions" });
 });
 
 // router.get('/alarms/:id', function(req,res) {
@@ -236,20 +262,20 @@ router.patch('/modules', function(req,res) {
 //     res.json(obj);
 //   });
 // });
-router.get('/text', function(req,res) {
-  _Text.find({'context': 'text'}).then(function(obj, err) {
+router.get("/text", function(req, res) {
+  _Text.find({ context: "text" }).then(function(obj, err) {
     if (err) res.status(500).send(err);
     res.json(obj);
   });
 });
-router.get('/time', function(req, res) {
-  Time.find({'context': 'time'}).then(function(time, err) {
+router.get("/time", function(req, res) {
+  Time.find({ context: "time" }).then(function(time, err) {
     if (err) res.status(500).send(err);
     res.json(time);
   });
 });
-router.get('/weather', function(req,res) {
-  Weather.find({'context': 'weather'}).then(function(obj, err) {
+router.get("/weather", function(req, res) {
+  Weather.find({ context: "weather" }).then(function(obj, err) {
     if (err) res.status(500).send(err);
     res.json(obj);
   });
@@ -259,9 +285,9 @@ router.get('/weather', function(req,res) {
 //   NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:req.body}, {new: true}, (err, doc) => {
 //     if (err) console.error(err);
 //   });
-  
+
 //   res.send({message: "Successfully updated NextAlarm settings!"});
-// });  
+// });
 
 // router.patch('/date', function(req,res) {
 //   _Date.findOneAndUpdate({context: 'date'}, {$set:req.body}, {new: true}, (err, doc) => {
@@ -269,27 +295,39 @@ router.get('/weather', function(req,res) {
 //   });
 
 //   res.send({message: "Successfully updated Date settings!"});
-// });  
-router.patch('/text', function(req,res) {
-  _Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
-    if (err) console.error(err);
-  });
-  res.send({message: "Successfully updated Text settings!"});
-});  
-router.patch('/time', function(req,res) {
-
-  Time.findOneAndUpdate({context: 'time'}, {$set:req.body}, {new: true}, (err, doc) => {
-    if (err) console.error(err);
-  });
-  res.send({message: "Successfully updated Time settings!"});
-  
+// });
+router.patch("/text", function(req, res) {
+  _Text.findOneAndUpdate(
+    { context: "text" },
+    { $set: req.body },
+    { new: true },
+    (err, doc) => {
+      if (err) console.error(err);
+    }
+  );
+  res.send({ message: "Successfully updated Text settings!" });
 });
-router.patch('/weather', function(req,res) {
-  Weather.findOneAndUpdate({context: 'weather'}, {$set:req.body}, {new: true}, (err, doc) => {
-    if (err) console.error(err);
-  });
-  res.send({message: "Successfully updated Weather settings!"});
-});  
-
+router.patch("/time", function(req, res) {
+  Time.findOneAndUpdate(
+    { context: "time" },
+    { $set: req.body },
+    { new: true },
+    (err, doc) => {
+      if (err) console.error(err);
+    }
+  );
+  res.send({ message: "Successfully updated Time settings!" });
+});
+router.patch("/weather", function(req, res) {
+  Weather.findOneAndUpdate(
+    { context: "weather" },
+    { $set: req.body },
+    { new: true },
+    (err, doc) => {
+      if (err) console.error(err);
+    }
+  );
+  res.send({ message: "Successfully updated Weather settings!" });
+});
 
 module.exports = router;

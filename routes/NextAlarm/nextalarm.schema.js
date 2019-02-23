@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-module.exports = mongoose.model('nextalarm', {
+module.exports = mongoose.model("nextalarm", {
   context: String,
   color: {
     r: Number,
