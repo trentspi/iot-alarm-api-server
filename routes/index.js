@@ -1,18 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-var NextAlarmSchema = require('./nextalarm/nextalarm.schema.js');
+var AlarmsModule = require('./alarms');
 var NextAlarmModule = require('./nextalarm');
-
-
-var _Date = require('./date/date.schema.js');
 var DateModule = require('./date');
 
 
+var NextAlarmSchema = require('./nextalarm/nextalarm.schema.js');
+var _Date = require('./date/date.schema.js');
 var _Text = require('./text/text.schema.js');
 var Time = require('./time/time.schema.js');
 var Weather = require('./weather/weather.schema.js');
-var Alarm = require('./alarm/alarm.schema.js');
 
 
 // NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
@@ -36,6 +34,7 @@ var Alarm = require('./alarm/alarm.schema.js');
 NextAlarmModule.seed()
 DateModule.seed();
 
+router.use('/alarms', AlarmsModule);
 router.use('/nextalarm', NextAlarmModule);
 router.use('/date', DateModule);
 
@@ -179,50 +178,50 @@ router.patch('/modules', function(req,res) {
   res.send({success: true, message: "Successfully updated positions"});
 });
 
-router.get('/alarms/:id', function(req,res) {
-  Alarm.findOne({_id: req.params.id}).then(function(alarm, err) {
-    if(err) console.error(err);
-    res.send(alarm);
-  });
-});
+// router.get('/alarms/:id', function(req,res) {
+//   Alarm.findOne({_id: req.params.id}).then(function(alarm, err) {
+//     if(err) console.error(err);
+//     res.send(alarm);
+//   });
+// });
 
-router.get('/alarms', function(req,res) {
-  Alarm.find({}).then(function(alarms, err) {
-    if(err) console.error(err);
-    res.send(alarms);
-  });
-});
+// router.get('/alarms', function(req,res) {
+//   Alarm.find({}).then(function(alarms, err) {
+//     if(err) console.error(err);
+//     res.send(alarms);
+//   });
+// });
 
-router.patch('/alarms/:id', function(req,res) {
-  Alarm.findOneAndUpdate({_id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
-    if (err) console.error(err);
-  });
-  res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
+// router.patch('/alarms/:id', function(req,res) {
+//   Alarm.findOneAndUpdate({_id: req.params.id}, {$set:req.body}, {new: true}, (err, doc) => {
+//     if (err) console.error(err);
+//   });
+//   res.send({success: true, message: "Successfully updated Alarm ID: " + req.params.id});
 
-});
+// });
 
-router.post('/alarms', function(req,res) {
-  Alarm.create({
-    name: req.body.name,
-    color: req.body.color,
-    hour: req.body.hour,
-    min: req.body.min,
-    days: req.body.days,
-    enabled: req.body.enabled
-  }).then(function (alarm, err) {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json(alarm);
-  });
-});
+// router.post('/alarms', function(req,res) {
+//   Alarm.create({
+//     name: req.body.name,
+//     color: req.body.color,
+//     hour: req.body.hour,
+//     min: req.body.min,
+//     days: req.body.days,
+//     enabled: req.body.enabled
+//   }).then(function (alarm, err) {
+//     if (err) {
+//       res.status(500).send(err);
+//     }
+//     res.json(alarm);
+//   });
+// });
 
-router.delete('/alarms/:id', function(req,res) {
-  Alarm.deleteOne({_id: req.params.id}, function(err) {
-    if(err) console.error(err);
-    res.send({success: true, message: "Deleted Alarm ID: " + req.params.id});
-  });
-});
+// router.delete('/alarms/:id', function(req,res) {
+//   Alarm.deleteOne({_id: req.params.id}, function(err) {
+//     if(err) console.error(err);
+//     res.send({success: true, message: "Deleted Alarm ID: " + req.params.id});
+//   });
+// });
 
 // router.get('/nextalarm', function(req,res) {
 //   NextAlarm.find({'context': 'nextalarm'}).then(function(obj, err) {
