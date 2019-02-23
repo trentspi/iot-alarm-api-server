@@ -1,51 +1,62 @@
 var express = require('express');
 var router = express.Router();
 
-var NextAlarm = require('./NextAlarm/nextalarm.schema.js');
-var _Date = require('./Date/date.schema.js');
-var _Text = require('./Text/text.schema.js');
-var Time = require('./Time/time.schema.js');
-var Weather = require('./Weather/weather.schema.js');
-var Alarm = require('./Alarm/alarm.schema.js');
+var NextAlarmSchema = require('./nextalarm/nextalarm.schema.js');
+var NextAlarmModule = require('./nextalarm');
 
 
-NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
-  if (err) return console.error(err);
-  if (obj === null) {
-    let doc = new NextAlarm({
-      context: 'nextalarm',
-      color: {
-        r: 255,
-        g: 255,
-        b: 255
-      },
-      position: -1,
-      displayAsCountdown: false
-    });
-    doc.save(function(err) {
-      if(err) return next(err);
-    });
-  }
-});
+var _Date = require('./date/date.schema.js');
+var DateModule = require('./date');
 
-_Date.findOne({context: 'date'}, function(err, obj) {
-  if (err) return console.error(err);
-  if (obj === null) {
-    let doc = new _Date({
-      context: 'date',
-      color: {
-        r: 255,
-        g: 255,
-        b: 255
-      },
-      showFullDate: false,
-      position: -1
-    });
-    doc.save(function(err) {
-      if(err) return next(err);
-    });
-  }
-});
+
+var _Text = require('./text/text.schema.js');
+var Time = require('./time/time.schema.js');
+var Weather = require('./weather/weather.schema.js');
+var Alarm = require('./alarm/alarm.schema.js');
+
+
+// NextAlarm.findOne({context: 'nextalarm'}, function(err, obj) {
+//   if (err) return console.error(err);
+//   if (obj === null) {
+//     let doc = new NextAlarm({
+//       context: 'nextalarm',
+//       color: {
+//         r: 255,
+//         g: 255,
+//         b: 255
+//       },
+//       position: -1,
+//       displayAsCountdown: false
+//     });
+//     doc.save(function(err) {
+//       if(err) return next(err);
+//     });
+//   }
+// });
+NextAlarmModule.seed()
+DateModule.seed();
+
+router.use('/nextalarm', NextAlarmModule);
+router.use('/date', DateModule);
+
+// _Date.findOne({context: 'date'}, function(err, obj) {
+//   if (err) return console.error(err);
+//   if (obj === null) {
+//     let doc = new _Date({
+//       context: 'date',
+//       color: {
+//         r: 255,
+//         g: 255,
+//         b: 255
+//       },
+//       showFullDate: false,
+//       position: -1
+//     });
+//     doc.save(function(err) {
+//       if(err) return next(err);
+//     });
+//   }
+// });
 
 _Text.findOne({context: 'text'}, function(err, obj) {
   if (err) return console.error(err);
@@ -113,7 +124,7 @@ router.get('/modules', function(req,res) {
   Time.find({'context': 'time'}).then(function(time, err) {
     if (err) res.status(500).send(err);
     
-    NextAlarm.find({'context': 'nextalarm'}).then(function(nextalarm, err) {
+    NextAlarmSchema.find({'context': 'nextalarm'}).then(function(nextalarm, err) {
       if(err) res.status(500).send(err);
 
       _Date.find({'context': 'date'}).then(function(date, err) {
@@ -213,18 +224,19 @@ router.delete('/alarms/:id', function(req,res) {
   });
 });
 
-router.get('/nextalarm', function(req,res) {
-  NextAlarm.find({'context': 'nextalarm'}).then(function(obj, err) {
-    if (err) res.status(500).send(err);
-    res.json(obj);
-  });
-});
-router.get('/date', function(req,res) {
-  _Date.find({'context': 'date'}).then(function(obj, err) {
-    if (err) res.status(500).send(err);
-    res.json(obj);
-  });
-});
+// router.get('/nextalarm', function(req,res) {
+//   NextAlarm.find({'context': 'nextalarm'}).then(function(obj, err) {
+//     if (err) res.status(500).send(err);
+//     res.json(obj);
+//   });
+// });
+
+// router.get('/date', function(req,res) {
+//   _Date.find({'context': 'date'}).then(function(obj, err) {
+//     if (err) res.status(500).send(err);
+//     res.json(obj);
+//   });
+// });
 router.get('/text', function(req,res) {
   _Text.find({'context': 'text'}).then(function(obj, err) {
     if (err) res.status(500).send(err);
@@ -244,20 +256,21 @@ router.get('/weather', function(req,res) {
   });
 });
 
-router.patch('/nextalarm', function(req,res) {
-  NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:req.body}, {new: true}, (err, doc) => {
-    if (err) console.error(err);
-  });
+// router.patch('/nextalarm', function(req,res) {
+//   NextAlarm.findOneAndUpdate({context: 'nextalarm'}, {$set:req.body}, {new: true}, (err, doc) => {
+//     if (err) console.error(err);
+//   });
   
-  res.send({message: "Successfully updated NextAlarm settings!"});
-});  
-router.patch('/date', function(req,res) {
-  _Date.findOneAndUpdate({context: 'date'}, {$set:req.body}, {new: true}, (err, doc) => {
-    if (err) console.error(err);
-  });
+//   res.send({message: "Successfully updated NextAlarm settings!"});
+// });  
 
-  res.send({message: "Successfully updated Date settings!"});
-});  
+// router.patch('/date', function(req,res) {
+//   _Date.findOneAndUpdate({context: 'date'}, {$set:req.body}, {new: true}, (err, doc) => {
+//     if (err) console.error(err);
+//   });
+
+//   res.send({message: "Successfully updated Date settings!"});
+// });  
 router.patch('/text', function(req,res) {
   _Text.findOneAndUpdate({context: 'text'}, {$set:req.body}, {new: true}, (err, doc) => {
     if (err) console.error(err);
